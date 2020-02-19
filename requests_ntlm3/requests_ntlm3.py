@@ -27,7 +27,7 @@ class HttpNtlmAuth(AuthBase):
                               HTTPS channel (Default: False)
         :param ntlm_compatibility: The Lan Manager Compatibility Level to use with the auth message
         """
-        logger.debug('entered HttpNtlmAuth __init__')
+        logger.debug("entered HttpNtlmAuth __init__")
 
         if ntlm is None:
             raise Exception("NTLM libraries unavailable")
@@ -54,7 +54,7 @@ class HttpNtlmAuth(AuthBase):
     def retry_using_http_ntlm_auth(
         self, auth_header_field, auth_header, response, auth_type, args
     ):
-        logger.debug('entered HttpNtlmAuth retry_using_http_ntlm_auth')
+        logger.debug("entered HttpNtlmAuth retry_using_http_ntlm_auth")
 
         # Get the certificate of the server if using HTTPS for CBT
         server_certificate_hash = get_server_cert(response, send_cbt=self.send_cbt)
@@ -130,7 +130,7 @@ class HttpNtlmAuth(AuthBase):
         return response3
 
     def response_hook(self, r, **kwargs):
-        logger.debug('entered HttpNtlmAuth response_hook')
+        logger.debug("entered HttpNtlmAuth response_hook")
         """The actual hook handler."""
         if r.status_code == 401:
             # Handle server auth.
@@ -153,7 +153,7 @@ class HttpNtlmAuth(AuthBase):
         return r
 
     def __call__(self, r):
-        logger.debug('entered HttpNtlmAuth __call__')
+        logger.debug("entered HttpNtlmAuth __call__")
         # we must keep the connection because NTLM authenticates the
         # connection, not single requests
         r.headers["Connection"] = "Keep-Alive"
@@ -162,7 +162,7 @@ class HttpNtlmAuth(AuthBase):
         return r
 
     def extract_username_and_password(self):
-        logger.debug('entered HttpNtlmAuth extract_username_and_password')
+        logger.debug("entered HttpNtlmAuth extract_username_and_password")
         if self.domain:
             return "{}\\{}".format(self.domain, self.username), self.password
         return self.username, self.password
