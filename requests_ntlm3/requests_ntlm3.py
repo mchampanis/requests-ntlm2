@@ -11,14 +11,14 @@ class HttpNtlmAuth(AuthBase):
     """
 
     def __init__(
-        self, username, password, send_cbt=True, ntlm_compatibility=NtlmCompatibility.NTLMv2_DEFAULT
+        self, username, password, send_cbt=False, ntlm_compatibility=NtlmCompatibility.NTLMv2_DEFAULT
     ):
         """Create an authentication handler for NTLM over HTTP.
 
         :param str username: Username in 'domain\\username' format
         :param str password: Password
         :param bool send_cbt: Will send the channel bindings over a
-                              HTTPS channel (Default: True)
+                              HTTPS channel (Default: False)
         :param ntlm_compatibility: The Lan Manager Compatibility Level to use with the auth message
         """
         if ntlm is None:
