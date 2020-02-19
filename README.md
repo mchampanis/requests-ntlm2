@@ -1,19 +1,19 @@
-# requests-ntlm2
+# requests-ntlm3
 
-[![Build Status](https://travis-ci.org/dopstar/requests-ntlm2.svg?branch=master)](https://travis-ci.org/dopstar/requests-ntlm2)
-[![codecov](https://codecov.io/gh/dopstar/requests-ntlm2/branch/master/graph/badge.svg)](https://codecov.io/gh/dopstar/requests-ntlm2)
-[![Python Version](https://img.shields.io/pypi/pyversions/requests-ntlm2.svg)](https://pypi.python.org/pypi/requests-ntlm2)
-[![PyPI Status](https://img.shields.io/pypi/v/requests-ntlm2.svg)](https://pypi.python.org/pypi/requests-ntlm2)
-[![Downloads](https://img.shields.io/pypi/dm/requests-ntlm2.svg)](https://pypi.python.org/pypi/requests-ntlm2)
-[![Licence](https://img.shields.io/github/license/dopstar/requests-ntlm2.svg)](https://raw.githubusercontent.com/dopstar/requests-ntlm2/master/LICENSE)
+[![Build Status](https://travis-ci.org/mchampanis/requests-ntlm3.svg?branch=master)](https://travis-ci.org/mchampanis/requests-ntlm3)
+[![codecov](https://codecov.io/gh/mchampanis/requests-ntlm3/branch/master/graph/badge.svg)](https://codecov.io/gh/mchampanis/requests-ntlm3)
+[![Python Version](https://img.shields.io/pypi/pyversions/requests-ntlm3.svg)](https://pypi.python.org/pypi/requests-ntlm3)
+[![PyPI Status](https://img.shields.io/pypi/v/requests-ntlm3.svg)](https://pypi.python.org/pypi/requests-ntlm3)
+[![Downloads](https://img.shields.io/pypi/dm/requests-ntlm3.svg)](https://pypi.python.org/pypi/requests-ntlm3)
+[![Licence](https://img.shields.io/github/license/mchampanis/requests-ntlm3.svg)](https://raw.githubusercontent.com/mchampanis/requests-ntlm3/master/LICENSE)
 [![Code Style: Black](https://img.shields.io/badge/code%20style-black-101010.svg)](https://github.com/psf/black)
 
-requests-ntlm2, which is based on [requests-ntlm](https://github.com/requests/requests-ntlm), allows for HTTP NTLM authentication using the requests library.
+requests-ntlm3, which is based on [requests-ntlm](https://github.com/requests/requests-ntlm), allows for HTTP NTLM authentication using the requests library.
 
 ## Installation
 
 ```shell
-pip install requests-ntlm2
+pip install requests-ntlm3
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ pip install requests-ntlm2
 
 ```python
 import requests
-from requests_ntlm2 import HttpNtlmAuth
+from requests_ntlm3 import HttpNtlmAuth
 
 auth=HttpNtlmAuth('domain\\username','password')
 requests.get("http://ntlm_protected_site.com", auth=auth)
@@ -31,13 +31,13 @@ requests.get("http://ntlm_protected_site.com", auth=auth)
 ___
 
 ### Changing NTLM compatibility level
-See this [MS doc](https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/cc960646%28v=technet.10%29) on LM compatibility levels. `requests_ntlm2` defaults to
+See this [MS doc](https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/cc960646%28v=technet.10%29) on LM compatibility levels. `requests_ntlm3` defaults to
 compatibility level 3 which supports NTLMv2 [only]. You can change the compatibility level as follows:
 
 
 ```python
 import requests
-from requests_ntlm2 import HttpNtlmAuth, NtlmCompatibility
+from requests_ntlm3 import HttpNtlmAuth, NtlmCompatibility
 
 username = 'domain\\username'
 password = 'password123'
@@ -56,7 +56,7 @@ NTLM challenge-response.
 
 ```python
 import requests
-from requests_ntlm2 import HttpNtlmAuth
+from requests_ntlm3 import HttpNtlmAuth
 
 session = requests.Session()
 session.auth = HttpNtlmAuth('domain\\username','password')
@@ -65,18 +65,18 @@ session.get('http://ntlm_protected_site.com')
 ___
 
 ### HTTP CONNECT Usage
-When using `requests-ntlm2` to create SSL proxy tunnel via
+When using `requests-ntlm3` to create SSL proxy tunnel via
 [HTTP CONNECT](https://en.wikipedia.org/wiki/HTTP_tunnel#HTTP_CONNECT_method), the so-called
 "NTLM Dance" - ie, the NTLM authentication handshake - has to be done at the lower level
 (at `httplib` level) at tunnel-creation step. This means that you should use the `HttpNtlmAdapter`
 and requests session. This `HttpNtlmAdapter` is responsible for sending proxy auth information
-downstream. 
+downstream.
 
 Here is a basic example:
 
 ```python
 import requests
-from requests_ntlm2 import (
+from requests_ntlm3 import (
     HttpNtlmAuth,
     HttpNtlmAdapter,
     NtlmCompatibility

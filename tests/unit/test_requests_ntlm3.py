@@ -4,8 +4,8 @@ import warnings
 
 import requests
 
-import requests_ntlm2
-import requests_ntlm2.core
+import requests_ntlm3
+import requests_ntlm3.core
 from tests.test_utils import domain, password, username
 
 
@@ -20,7 +20,7 @@ class TestRequestsNtlm(unittest.TestCase):
         for auth_type in self.auth_types:
             res = requests.get(
                 url=self.test_server_url + auth_type,
-                auth=requests_ntlm2.HttpNtlmAuth(
+                auth=requests_ntlm3.HttpNtlmAuth(
                     self.test_server_username, self.test_server_password
                 ),
             )
@@ -30,7 +30,7 @@ class TestRequestsNtlm(unittest.TestCase):
         for auth_type in self.auth_types:
             res = requests.get(
                 url=self.test_server_url + auth_type,
-                auth=requests_ntlm2.HttpNtlmAuth(
+                auth=requests_ntlm3.HttpNtlmAuth(
                     self.test_server_username, self.test_server_password
                 ),
             )
@@ -41,7 +41,7 @@ class TestRequestsNtlm(unittest.TestCase):
         for auth_type in self.auth_types:
             res = requests.get(
                 url=self.test_server_url + auth_type,
-                auth=requests_ntlm2.HttpNtlmAuth(
+                auth=requests_ntlm3.HttpNtlmAuth(
                     self.test_server_username, self.test_server_password
                 ),
             )
@@ -54,7 +54,7 @@ class TestRequestsNtlm(unittest.TestCase):
         expected_domain = "DOMAIN"
         expected_user = "user"
 
-        context = requests_ntlm2.HttpNtlmAuth(test_user, "pass")
+        context = requests_ntlm3.HttpNtlmAuth(test_user, "pass")
 
         actual_domain = context.domain
         actual_user = context.username
@@ -70,7 +70,7 @@ class TestRequestsNtlm(unittest.TestCase):
         expected_domain = ""
         expected_user = "user@domain.com"
 
-        context = requests_ntlm2.HttpNtlmAuth(test_user, "pass")
+        context = requests_ntlm3.HttpNtlmAuth(test_user, "pass")
 
         actual_domain = context.domain
         actual_user = context.username
@@ -83,7 +83,7 @@ class TestRequestsNtlm(unittest.TestCase):
         expected_domain = ""
         expected_user = "user"
 
-        context = requests_ntlm2.HttpNtlmAuth(test_user, "pass")
+        context = requests_ntlm3.HttpNtlmAuth(test_user, "pass")
 
         actual_domain = context.domain
         actual_user = context.username
@@ -120,7 +120,7 @@ class TestCertificateHash(unittest.TestCase):
         expected_hash = (
             "2334B8476CBF4E6DFC766A5D5A30D6649C01BAE1662A5C3A130" "2A968D7C6B0F6"
         )
-        actual_hash = requests_ntlm2.core.get_certificate_hash(
+        actual_hash = requests_ntlm3.core.get_certificate_hash(
             base64.b64decode(cert_der)
         )
         assert actual_hash == expected_hash
@@ -152,7 +152,7 @@ class TestCertificateHash(unittest.TestCase):
         expected_hash = (
             "14CFE8E4B332B20A343FC840B18F9F6F78926AFE7EC3E7B8E28" "969619B1E8F3E"
         )
-        actual_hash = requests_ntlm2.core.get_certificate_hash(
+        actual_hash = requests_ntlm3.core.get_certificate_hash(
             base64.b64decode(cert_der)
         )
         assert actual_hash == expected_hash
@@ -184,7 +184,7 @@ class TestCertificateHash(unittest.TestCase):
         expected_hash = (
             "996F3EEA812C1870E30549FF9B86CD87A890B6D8DFDF4A81BEF" "9675970DADB26"
         )
-        actual_hash = requests_ntlm2.core.get_certificate_hash(
+        actual_hash = requests_ntlm3.core.get_certificate_hash(
             base64.b64decode(cert_der)
         )
         assert actual_hash == expected_hash
@@ -217,7 +217,7 @@ class TestCertificateHash(unittest.TestCase):
             "34F303C995286F4B214A9BA6435B69B51ECF3758EABC2A14D7A"
             "43FD237DC2B1A1AD9111C5C965E107507CB4198C09FEC"
         )
-        actual_hash = requests_ntlm2.core.get_certificate_hash(
+        actual_hash = requests_ntlm3.core.get_certificate_hash(
             base64.b64decode(cert_der)
         )
         assert actual_hash == expected_hash
@@ -251,7 +251,7 @@ class TestCertificateHash(unittest.TestCase):
             "00544E1AD2B76FF25CFBE69B1C4E630C3BB0207DF11314C6738"
             "BCAED7E071D7BFBF2C9DFAB85D"
         )
-        actual_hash = requests_ntlm2.core.get_certificate_hash(
+        actual_hash = requests_ntlm3.core.get_certificate_hash(
             base64.b64decode(cert_der)
         )
         assert actual_hash == expected_hash
@@ -273,7 +273,7 @@ class TestCertificateHash(unittest.TestCase):
         expected_hash = (
             "1EC9AD46DEE9340E4503CFFDB5CD810CB26B778F46BE95D5EAF" "999DCB1C45EDA"
         )
-        actual_hash = requests_ntlm2.core.get_certificate_hash(
+        actual_hash = requests_ntlm3.core.get_certificate_hash(
             base64.b64decode(cert_der)
         )
         assert actual_hash == expected_hash
@@ -295,7 +295,7 @@ class TestCertificateHash(unittest.TestCase):
         expected_hash = (
             "FECF1B2585449990D9E3B2C92D3F597EC8354E124EDA751D948" "37C2C89A2C155"
         )
-        actual_hash = requests_ntlm2.core.get_certificate_hash(
+        actual_hash = requests_ntlm3.core.get_certificate_hash(
             base64.b64decode(cert_der)
         )
         assert actual_hash == expected_hash
@@ -318,7 +318,7 @@ class TestCertificateHash(unittest.TestCase):
             "D2987AD8F20E8316A831261B74EF7B3E55155D0922E07FFE546"
             "20806982B68A73A5E3C478BAA5E7714135CB26D980749"
         )
-        actual_hash = requests_ntlm2.core.get_certificate_hash(
+        actual_hash = requests_ntlm3.core.get_certificate_hash(
             base64.b64decode(cert_der)
         )
         assert actual_hash == expected_hash
@@ -342,7 +342,7 @@ class TestCertificateHash(unittest.TestCase):
             "F19A5BD8F0B2FAAC861855FBB63A221CC46FC1E226A072411AF"
             "175DDE479281E006878B348059"
         )
-        actual_hash = requests_ntlm2.core.get_certificate_hash(
+        actual_hash = requests_ntlm3.core.get_certificate_hash(
             base64.b64decode(cert_der)
         )
         assert actual_hash == expected_hash
@@ -371,7 +371,7 @@ class TestCertificateHash(unittest.TestCase):
 
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
-            actual_hash = requests_ntlm2.core.get_certificate_hash(
+            actual_hash = requests_ntlm3.core.get_certificate_hash(
                 base64.b64decode(cert_der)
             )
             assert actual_hash == expected_hash
