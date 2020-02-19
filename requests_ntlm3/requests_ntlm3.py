@@ -11,7 +11,8 @@ class HttpNtlmAuth(AuthBase):
     """
 
     def __init__(
-        self, username, password, send_cbt=False, ntlm_compatibility=NtlmCompatibility.NTLMv2_DEFAULT
+        self, username, password, send_cbt=False,
+        ntlm_compatibility=NtlmCompatibility.NTLMv2_DEFAULT
     ):
         """Create an authentication handler for NTLM over HTTP.
 
