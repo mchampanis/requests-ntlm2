@@ -1,8 +1,11 @@
 from setuptools import setup
 
 
-version = "6.1.2"
-url = "https://github.com/dopstar/requests-ntlm2"
+version = "6.1.3b1"
+url = "https://github.com/mchampanis/requests-ntlm3"
+author = "Michael Champanis"
+author_email = "michael.champanis@gmail.com"
+
 
 if "a" in version:
     dev_status = "3 - Alpha"
@@ -42,14 +45,14 @@ linting_requirements = [
 
 
 setup(
-    name="requests_ntlm2",
+    name="requests_ntlm3",
     version=version,
-    packages=["requests_ntlm2"],
+    packages=["requests_ntlm3"],
     install_requires=requirements,
     tests_require=testing_requirements,
     extras_require={"testing": testing_requirements, "linting": linting_requirements},
-    author="Mkhanyisi Madlavana",
-    author_email="mmadlavana@gmail.com",
+    author=author,
+    author_email=author_email,
     url=url,
     download_url="{url}/archive/{version}.tar.gz".format(url=url, version=version),
     description=(
@@ -59,7 +62,7 @@ setup(
     long_description_content_type="text/markdown",
     license="ISC",
     keywords=["NTLM", "requests", "proxy", "authorization", "NTLM dance"],
-    package_dir={"requests_ntlm2": "requests_ntlm2"},
+    package_dir={"requests_ntlm3": "requests_ntlm3"},
     classifiers=[
         "Development Status :: {0}".format(dev_status),
         "Intended Audience :: Developers",
