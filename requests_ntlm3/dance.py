@@ -51,6 +51,7 @@ class HttpNtlmContext(ntlm_auth.ntlm.NtlmContext):
         :param auth_type: either 'NTLM' or 'Negotiate'
         :param server_certificate_hash: the hash of the certificate from peer
         """
+        logger.debug('entered HttpNtlmContext __init__')
         if auth_type not in ("NTLM", "Negotiate"):
             raise ValueError(
                 'Expected "NTLM" or "Negotiate" auth_type, got %s'.format(auth_type)
@@ -111,6 +112,7 @@ class HttpNtlmContext(ntlm_auth.ntlm.NtlmContext):
         return base64.b64encode(msg)
 
     def get_negotiate_header(self):
+        logger.debug('entered HttpNtlmContext get_negotiate_header')
         negotiate_message = self.create_negotiate_message().decode("ascii")
         result = u"{auth_type} {negotiate_message}".format(
             auth_type=self._auth_type, negotiate_message=negotiate_message
@@ -118,6 +120,7 @@ class HttpNtlmContext(ntlm_auth.ntlm.NtlmContext):
         return result
 
     def set_challenge_from_header(self, raw_header_value):
+        logger.debug('entered HttpNtlmContext set_challenge_from_header')
         if not raw_header_value:
             return None
 
@@ -135,6 +138,7 @@ class HttpNtlmContext(ntlm_auth.ntlm.NtlmContext):
         return None
 
     def get_authenticate_header(self):
+        logger.debug('entered HttpNtlmContext get_authenticate_header')
         authenticate_message = self.create_authenticate_message()
         authenticate_message = authenticate_message.decode("ascii")
         return u"{auth_type} {authenticate_message}".format(

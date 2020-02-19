@@ -50,6 +50,7 @@ class VerifiedHTTPSConnection(_VerifiedHTTPSConnection):
     ntlm_compatibility = NtlmCompatibility.NTLMv2_DEFAULT
 
     def __init__(self, *args, **kwargs):
+        logger.debug('entered VerifiedHTTPSConnection __init__')
         super(VerifiedHTTPSConnection, self).__init__(*args, **kwargs)
         self.__continue_reading_headers = True
         if self.ntlm_compatibility is None:
@@ -57,14 +58,17 @@ class VerifiedHTTPSConnection(_VerifiedHTTPSConnection):
 
     @classmethod
     def set_ntlm_auth_credentials(cls, username, password):
+        logger.debug('entered VerifiedHTTPSConnection set_ntlm_auth_credentials')
         cls._ntlm_credentials = get_ntlm_credentials(username, password)
 
     @classmethod
     def clear_ntlm_auth_credentials(cls):
+        logger.debug('entered VerifiedHTTPSConnection clear_ntlm_auth_credentials')
         cls._ntlm_credentials = None
         del cls._ntlm_credentials
 
     def handle_http09_response(self, response):
+        logger.debug('entered VerifiedHTTPSConnection handle_http09_response')
         status_line_regex = re.compile(
             r"(?P<version>HTTP/\d\.\d)\s+(?P<status>\d+)\s+(?P<message>.+)",
             re.DOTALL
@@ -88,6 +92,7 @@ class VerifiedHTTPSConnection(_VerifiedHTTPSConnection):
         return None
 
     def _get_response(self):
+        logger.debug('entered VerifiedHTTPSConnection _get_response')
         response = self.response_class(self.sock, method=self._method)
         version, code, message = response._read_status()
         if (version, code, message) in _ASSUMED_HTTP09_STATUS_LINES:
@@ -99,6 +104,7 @@ class VerifiedHTTPSConnection(_VerifiedHTTPSConnection):
         return version, code, message, response
 
     def _get_header_bytes(self, proxy_auth_header=None):
+        logger.debug('entered VerifiedHTTPSConnection _get_header_bytes')
         host, port = self._get_hostport(self._tunnel_host, self._tunnel_port)
         http_connect_string = "CONNECT {}:{} HTTP/1.0\r\n".format(host, port)
         logger.debug("> %r", http_connect_string)
@@ -117,6 +123,7 @@ class VerifiedHTTPSConnection(_VerifiedHTTPSConnection):
         return header_bytes.encode("latin1")
 
     def _tunnel(self):
+        logger.debug('entered VerifiedHTTPSConnection _tunnel')
         username, password, domain = self._ntlm_credentials
 
         ntlm_context = HttpNtlmContext(

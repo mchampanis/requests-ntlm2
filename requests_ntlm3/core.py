@@ -43,6 +43,7 @@ def get_server_cert(response, send_cbt=False):
     :return: The hash of the DER encoded certificate at the
              request_url or None if not a HTTPS endpoint
     """
+    logger.debug('entered get_server_cert')
     if send_cbt:
         raw_response = response.raw
 
@@ -70,6 +71,7 @@ def get_server_cert(response, send_cbt=False):
 
 
 def get_certificate_hash(certificate_der):
+    logger.debug('entered certificate_der')
     # https://tools.ietf.org/html/rfc5929#section-4.1
     cert = x509.load_der_x509_certificate(certificate_der, default_backend())
 
@@ -104,6 +106,7 @@ def get_auth_type_from_header(header):
     authentication type to use. We prefer NTLM over Negotiate if the server
     suppports it.
     """
+    logger.debug('entered get_auth_type_from_header')
     if "ntlm" in header:
         return "NTLM"
     elif "negotiate" in header:
@@ -112,6 +115,7 @@ def get_auth_type_from_header(header):
 
 
 def get_ntlm_credentials(username, password):
+    logger.debug('entered get_ntlm_credentials')
     try:
         domain, username = username.split("\\", 1)
     except ValueError:

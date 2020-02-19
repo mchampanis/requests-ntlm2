@@ -1,3 +1,5 @@
+import logging
+
 try:
     import urlparse
 except ImportError:
@@ -12,8 +14,12 @@ from .connection import HTTPSConnection as _HTTPSConnection
 from .core import NtlmCompatibility
 
 
+logger = logging.getLogger(__name__)
+
+
 class HttpProxyAdapter(HTTPAdapter):
     def _add_host_header(self, request):
+        logger.debug('entered HttpProxyAdapter _add_host_header')
         if request.headers.get("Host"):
             if self._is_valid_host_header(request):
                 return
@@ -29,6 +35,7 @@ class HttpProxyAdapter(HTTPAdapter):
 
     @staticmethod
     def _is_valid_host_header(request):
+        logger.debug('entered HttpProxyAdapter _is_valid_host_header')
         host = request.headers.get("Host")
         if not host:
             return False
@@ -40,12 +47,14 @@ class HttpProxyAdapter(HTTPAdapter):
 
     @staticmethod
     def _remove_host_header(request):
+        logger.debug('entered HttpProxyAdapter _remove_host_header')
         try:
             del request.headers["Host"]
         except KeyError:
             pass
 
     def add_headers(self, request, **kwargs):
+        logger.debug('entered HttpProxyAdapter add_headers')
         super(HttpProxyAdapter, self).add_headers(request, **kwargs)
         self._add_host_header(request)
 
@@ -62,15 +71,18 @@ class HttpNtlmAdapter(HttpProxyAdapter):
         """
         Thin wrapper around requests.adapters.HTTPAdapter
         """
+        logger.debug('entered HttpNtlmAdapter add_headers')
         self._setup(ntlm_username, ntlm_password, ntlm_compatibility)
         super(HttpNtlmAdapter, self).__init__(*args, **kwargs)
 
     def close(self):
+        logger.debug('entered HttpNtlmAdapter close')
         self._teardown()
         super(HttpNtlmAdapter, self).close()
 
     @staticmethod
     def _setup(username, password, ntlm_compatibility):
+        logger.debug('entered HttpNtlmAdapter _setup')
         pool_classes_by_scheme["http"].ConnectionCls = _HTTPConnection
         pool_classes_by_scheme["https"].ConnectionCls = _HTTPSConnection
         _HTTPSConnection.set_ntlm_auth_credentials(username, password)
@@ -78,6 +90,7 @@ class HttpNtlmAdapter(HttpProxyAdapter):
 
     @staticmethod
     def _teardown():
+        logger.debug('entered HttpNtlmAdapter _teardown')
         pool_classes_by_scheme["http"].ConnectionCls = HTTPConnection
         pool_classes_by_scheme["https"].ConnectionCls = HTTPSConnection
         _HTTPSConnection.clear_ntlm_auth_credentials()
