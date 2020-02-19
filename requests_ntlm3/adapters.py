@@ -1,5 +1,4 @@
 import logging
-
 try:
     import urlparse
 except ImportError:
@@ -12,7 +11,6 @@ from requests.packages.urllib3.poolmanager import pool_classes_by_scheme
 from .connection import HTTPConnection as _HTTPConnection
 from .connection import HTTPSConnection as _HTTPSConnection
 from .core import NtlmCompatibility
-
 
 logger = logging.getLogger(__name__)
 
